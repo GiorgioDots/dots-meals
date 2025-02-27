@@ -1,0 +1,6 @@
+@Dots.Meals.Api_HostAddress = http://localhost:5001
+
+GET {{Dots.Meals.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
