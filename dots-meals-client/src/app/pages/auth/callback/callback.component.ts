@@ -1,4 +1,5 @@
 import { environment } from '@/envs/environment';
+import { ClientAuthService } from '@/services/client-auth.service';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,61 +13,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class CallbackComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly http = inject(HttpClient);
+  private clientAuthSvc = inject(ClientAuthService);
   errorMessage?: string;
 
   ngOnInit(): void {
-    const cbState = this.route.snapshot.queryParamMap.get('state');
-    const cbCode = this.route.snapshot.queryParamMap.get('code');
-    const cbStatus = this.route.snapshot.queryParamMap.get('status');
-
-    const state = sessionStorage.getItem('auth:state');
-    const verifier = sessionStorage.getItem('auth:code_verifier');
-
-    this.cleanSessionStorage();
-
-    if (state != cbState) {
-      this.errorMessage = 'Request forged';
-      return;
-    }
-
-    if (cbStatus != undefined) {
-      switch (cbStatus) {
-        case 'cancelled':
-        default:
-          this.errorMessage = 'Authorization was not accepted';
-          return;
-      }
-    }
-
-    this.http
-      .post<JwtAuthResponseDTO>(`${environment.authUrl}/oauth/token`, {
-        code: cbCode,
-        code_verifier: verifier,
-        grant_type: 'token',
-      })
+    this.clientAuthSvc
+      .handleAuthCallback(this.route.snapshot.queryParamMap)
       .subscribe({
-        next: (res: JwtAuthResponseDTO) => {
-          localStorage.setItem('auth:rfrsh', res.refresh_token);
-          sessionStorage.setItem('auth:tkn', res.access_token);
+        next: () => {
           this.router.navigate(['']);
         },
         error: (e) => {
-          if (e instanceof HttpErrorResponse) {
-            this.errorMessage = e.error.error;
+          if (typeof e == 'string') {
+            this.errorMessage = e;
+            return;
           }
+          this.errorMessage = 'Something went wrong';
         },
       });
   }
-
-  cleanSessionStorage() {
-    sessionStorage.removeItem('auth:state');
-    sessionStorage.removeItem('auth:code_verifier');
-  }
-}
-
-export interface JwtAuthResponseDTO {
-  access_token: string;
-  refresh_token: string;
-  expires_at: number;
 }

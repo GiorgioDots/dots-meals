@@ -1,0 +1,13 @@
+{
+  "$schema": "https://unpkg.com/jsrepo@1.41.2/schemas/project-config.json",
+  "repos": [
+    "https://github.com/GiorgioDots/dots-ng-lib"
+  ],
+  "includeTests": false,
+  "watermark": true,
+  "formatter": "prettier",
+  "configFiles": {},
+  "paths": {
+    "*": "./src/app/core/blocks"
+  }
+}

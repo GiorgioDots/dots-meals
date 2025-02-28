@@ -1,6 +1,11 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterOutlet } from '@angular/router';
 import { environment } from '../environments/environment';
+import { DotsAuthApiService } from '@/blocks/api/dots-auth-api.service';
+import { JwtAuthService } from '@/blocks/auth/jwt-auth/jwt-auth.service';
+import { AuthTokensService } from './core/services/auth-tokens.service';
+import { ClientAuthService } from './core/services/client-auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -10,41 +15,29 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent {
   title = 'dots-meals';
+  readonly authApi = inject(DotsAuthApiService);
+  readonly jwtAuthSvc = inject(JwtAuthService);
+  readonly tokensSvc = inject(AuthTokensService);
+  readonly clientAuthSvc = inject(ClientAuthService);
+  readonly router = inject(Router);
 
-  async gotoLogin() {
-    const codeVerifier = generateCodeVerifier();
-    const code_challenge = await generateCodeChallenge(codeVerifier);
-    const state = generateState();
-    sessionStorage.setItem('auth:code_verifier', codeVerifier);
-    sessionStorage.setItem('auth:state', state);
-    location.href = `${environment.authUrl}/oauth/authorize?client_id=${environment.clientId}&redirect_uri=${location.origin}/auth/callback&code_challenge=${code_challenge}&state=${state}`;
+  constructor() {
+    this.authApi.init(environment.authUrl);
+    this.jwtAuthSvc.initialize({
+      jwtTokenGetterFn: () => this.tokensSvc.getToken() ?? '',
+      refreshTokenFn: () => this.clientAuthSvc.refreshToken(),
+      refreshTokenFailedFn: (err) => {
+        if (err instanceof HttpErrorResponse && err.status != 401) {
+          return;
+        }
+        // show messages / handle error
+        this.clientAuthSvc.logout();
+        this.router.navigate(['']);
+      },
+    });
   }
-}
 
-function generateCodeVerifier() {
-  const array = new Uint8Array(32);
-  window.crypto.getRandomValues(array);
-  return btoa(String.fromCharCode(...array))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
-}
-
-async function generateCodeChallenge(codeVerifier: string) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(codeVerifier);
-  const digest = await window.crypto.subtle.digest('SHA-256', data);
-  return btoa(String.fromCharCode(...new Uint8Array(digest)))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
-}
-
-function generateState() {
-  const array = new Uint8Array(16);
-  window.crypto.getRandomValues(array);
-  return btoa(String.fromCharCode(...array))
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, ''); // Base64-URL encoding
+  gotoLogin() {
+    this.clientAuthSvc.gotoDotsAuthLogin();
+  }
 }
