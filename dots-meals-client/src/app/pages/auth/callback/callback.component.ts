@@ -21,7 +21,7 @@ export class CallbackComponent implements OnInit {
       .handleAuthCallback(this.route.snapshot.queryParamMap)
       .subscribe({
         next: () => {
-          this.router.navigate(['']);
+          this.router.navigate(['app']);
         },
         error: (e) => {
           if (typeof e == 'string') {

@@ -36,8 +36,4 @@ export class AppComponent {
       },
     });
   }
-
-  gotoLogin() {
-    this.clientAuthSvc.gotoDotsAuthLogin();
-  }
 }
