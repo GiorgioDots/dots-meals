@@ -21,7 +21,8 @@
       "@/pages/*": ["./src/app/pages/*"],
       "@/envs/*": ["./src/environments/*"],
       "@/blocks/*": ["./src/app/core/blocks/*"],
-      "@/services/*": ["./src/app/core/services/*"]
+      "@/services/*": ["./src/app/core/services/*"],
+      "@/directives/*": ["./src/app/core/directives/*"],
     }
   },
   "angularCompilerOptions": {

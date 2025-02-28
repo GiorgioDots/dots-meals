@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router'
   selector: 'app-landing',
   imports: [RouterModule],
   templateUrl: './landing.component.html',
-  styleUrl: './landing.component.scss',
+  styleUrl: './landing.component.css',
 })
 export class LandingComponent {
   readonly clientAuthSvc = inject(ClientAuthService)
