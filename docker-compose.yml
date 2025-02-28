@@ -11,6 +11,8 @@ services:
     secrets:
       - db_url
       - jwt_secret
+    volumes:
+      - ./sqlite-data:/data  # Mount local sqlite-data folder to /data inside the container
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - DB_URL_FILE=/run/secrets/db_url

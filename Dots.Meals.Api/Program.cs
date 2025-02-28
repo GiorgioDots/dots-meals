@@ -1,5 +1,7 @@
+using Dots.Meals.DAL;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Text.Json.Serialization;
 
@@ -11,7 +13,12 @@ namespace Dots.Meals.Api
         {
             var settings = new AppSettings();
 
+            var dbInitializer = new DbInitializer(settings.DbUrl);
+            dbInitializer.Initialize();
+
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<DotsMealsDbContext>(opt => opt.UseSqlite(settings.DbUrl));
 
 #if !DEBUG
             builder.Services.AddSpaStaticFiles(opt =>
@@ -20,7 +27,6 @@ namespace Dots.Meals.Api
             });
 #endif
 
-            builder.Services.AddSingleton(settings);
             builder.Services.AddAuthenticationJwtBearer(
                     s => s.SigningKey = settings.JwtSecret,
                     b =>
@@ -35,9 +41,9 @@ namespace Dots.Meals.Api
             builder.Services.AddFastEndpoints();
             builder.Services.SwaggerDocument();
             builder.Services.AddCors(o =>
-                    o.AddPolicy("cors", p =>
-                        p.WithOrigins(Envs.AllowedOrigins.Split(',')).AllowAnyHeader().AllowAnyMethod())
-                );
+                o.AddPolicy("cors", p =>
+                    p.WithOrigins(Envs.AllowedOrigins.Split(',')).AllowAnyHeader().AllowAnyMethod())
+            );
 
 
             var app = builder.Build();
