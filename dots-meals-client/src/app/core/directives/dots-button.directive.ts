@@ -14,7 +14,6 @@ export class DotsButtonDirective {
   ) {
     this.spinner = this.renderer.createElement('span')
     this.renderer.addClass(this.spinner, 'spinner')
-    this.renderer.addClass(this.spinner, 'ml-2')
     this.renderer.setAttribute(this.spinner, 'role', 'status')
     this.renderer.setAttribute(this.spinner, 'aria-hidden', 'true')
     this.renderer.addClass(this.el.nativeElement, 'btn')

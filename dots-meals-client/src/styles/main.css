@@ -1,1 +1,16 @@
 @import './components/_index.css';
+@import './themes/_index.css';
+
+html {
+  @apply bg-background text-foreground scroll-smooth;
+}
+
+body {
+  @apply min-h-svh bg-background font-sans antialiased transition-colors;
+}
+
+* {
+  @apply border-border;
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--border)) transparent;
+}

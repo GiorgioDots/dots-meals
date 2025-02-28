@@ -13,6 +13,7 @@ export const routes: Routes = [
     path: 'app',
     loadComponent: () => import('@/pages/main/main.component').then((k) => k.MainComponent),
     canActivate: [isAuthGuard],
+    children: [],
   },
   {
     path: '',

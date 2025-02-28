@@ -23,6 +23,8 @@
       "@/blocks/*": ["./src/app/core/blocks/*"],
       "@/services/*": ["./src/app/core/services/*"],
       "@/directives/*": ["./src/app/core/directives/*"],
+      "@/main-api/*": ["./src/app/core/main-api/*"],
+      "@/components/*": ["./src/app/core/components/*"]
     }
   },
   "angularCompilerOptions": {

@@ -1,17 +1,17 @@
-import { DotsAuthApiService } from '@/blocks/api/dots-auth-api.service';
-import { JwtAuthService } from '@/blocks/auth/jwt-auth/jwt-auth.service';
-import { environment } from '@/envs/environment';
-import { AuthTokensService } from '@/services/auth-tokens.service';
-import { ClientAuthService } from '@/services/client-auth.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { DotsAuthApiService } from '@/blocks/api/dots-auth-api.service'
+import { JwtAuthService } from '@/blocks/auth/jwt-auth/jwt-auth.service'
+import { environment } from '@/envs/environment'
+import { AuthTokensService } from '@/services/auth-tokens.service'
+import { ClientAuthService } from '@/services/client-auth.service'
+import { HttpErrorResponse } from '@angular/common/http'
+import { Component, inject } from '@angular/core'
+import { Router, RouterOutlet } from '@angular/router'
 
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent {
   readonly authApi = inject(DotsAuthApiService)

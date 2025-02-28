@@ -1,2 +1,7 @@
-<p>main works!</p>
-<button (click)="logout()" dotsButton [loading]="true">logout</button>
+@if (!loading() && !userFirstAccess()) {
+  <button (click)="logout()" dotsButton class="ml-2">Logout</button>
+} @else if (!loading() && userFirstAccess()) {
+  <app-welcome></app-welcome>
+} @else {
+  loading
+}
