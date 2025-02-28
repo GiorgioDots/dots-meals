@@ -4,30 +4,25 @@
 	2-28-2025
 */
 
-import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
-import { JwtAuthRequestDTO } from "./jwt-auth-request-dto";
-import { JwtAuthResponseDTO } from "./jwt-auth-response-dto";
+import { HttpClient } from '@angular/common/http'
+import { inject, Injectable } from '@angular/core'
+import { JwtAuthRequestDTO } from './jwt-auth-request-dto'
+import { JwtAuthResponseDTO } from './jwt-auth-response-dto'
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class DotsAuthApiService {
-  private authUrl?: string;
-  private readonly http = inject(HttpClient);
+  private authUrl?: string
+  private readonly http = inject(HttpClient)
 
   init(authUrl: string) {
-    this.authUrl = authUrl;
+    this.authUrl = authUrl
   }
 
   getToken(data: JwtAuthRequestDTO) {
     if (!this.authUrl)
-      throw new Error(
-        "No authUrl setted, maybe you forgot to initialize the service",
-      );
-    return this.http.post<JwtAuthResponseDTO>(
-      `${this.authUrl}/oauth/token`,
-      data,
-    );
+      throw new Error('No authUrl setted, maybe you forgot to initialize the service')
+    return this.http.post<JwtAuthResponseDTO>(`${this.authUrl}/oauth/token`, data)
   }
 }

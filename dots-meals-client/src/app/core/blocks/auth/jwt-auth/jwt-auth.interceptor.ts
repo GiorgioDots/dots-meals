@@ -10,20 +10,13 @@ import {
   HttpHandlerFn,
   HttpInterceptorFn,
   HttpRequest,
-} from "@angular/common/http";
-import { inject } from "@angular/core";
-import {
-  catchError,
-  filter,
-  Observable,
-  switchMap,
-  take,
-  throwError,
-} from "rxjs";
-import { JwtAuthService } from "./jwt-auth.service";
+} from '@angular/common/http'
+import { inject } from '@angular/core'
+import { catchError, filter, Observable, switchMap, take, throwError } from 'rxjs'
+import { JwtAuthService } from './jwt-auth.service'
 
 export const jwtAuthInterceptor: HttpInterceptorFn = (req, next) => {
-  const jwtAuthSvc = inject(JwtAuthService);
+  const jwtAuthSvc = inject(JwtAuthService)
   const handle401Error = (
     req: HttpRequest<any>,
     next: HttpHandlerFn,
@@ -40,47 +33,43 @@ export const jwtAuthInterceptor: HttpInterceptorFn = (req, next) => {
                 Authorization: `Bearer ${token}`,
               },
             }),
-          );
+          )
         }),
-      );
+      )
     }
 
-    jwtAuthSvc.isRefreshing = true;
-    jwtAuthSvc.refreshTokenSubject.next(undefined);
+    jwtAuthSvc.isRefreshing = true
+    jwtAuthSvc.refreshTokenSubject.next(undefined)
 
     if (jwtAuthSvc.refreshTokenFn == undefined) {
-      throw new Error(
-        "JwtAuthInterceptor: JwtAuthService.refreshTokenFn is undefined",
-      );
+      throw new Error('JwtAuthInterceptor: JwtAuthService.refreshTokenFn is undefined')
     }
 
     return jwtAuthSvc.refreshTokenFn().pipe(
       switchMap((newToken: string) => {
-        jwtAuthSvc.isRefreshing = false;
-        jwtAuthSvc.refreshTokenSubject.next(newToken);
+        jwtAuthSvc.isRefreshing = false
+        jwtAuthSvc.refreshTokenSubject.next(newToken)
         return next(
           req.clone({
             setHeaders: {
               Authorization: `Bearer ${newToken}`,
             },
           }),
-        );
+        )
       }),
       catchError((err) => {
-        jwtAuthSvc.isRefreshing = false;
-        jwtAuthSvc.refreshTokenFailedFn?.(err);
-        return throwError(() => err);
+        jwtAuthSvc.isRefreshing = false
+        jwtAuthSvc.refreshTokenFailedFn?.(err)
+        return throwError(() => err)
       }),
-    );
-  };
+    )
+  }
 
   // Executing the original request
   if (jwtAuthSvc.jwtTokenGetterFn == undefined) {
-    throw new Error(
-      "JwtAuthInterceptor: JwtAuthService.jwtTokenGetterFn is undefined",
-    );
+    throw new Error('JwtAuthInterceptor: JwtAuthService.jwtTokenGetterFn is undefined')
   }
-  const token = jwtAuthSvc.jwtTokenGetterFn();
+  const token = jwtAuthSvc.jwtTokenGetterFn()
   return next(
     req.clone({
       setHeaders: {
@@ -90,9 +79,9 @@ export const jwtAuthInterceptor: HttpInterceptorFn = (req, next) => {
   ).pipe(
     catchError((error) => {
       if (error instanceof HttpErrorResponse && error.status === 401) {
-        return handle401Error(req, next);
+        return handle401Error(req, next)
       }
-      return throwError(() => error);
+      return throwError(() => error)
     }),
-  );
-};
+  )
+}

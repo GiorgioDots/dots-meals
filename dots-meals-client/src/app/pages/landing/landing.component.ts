@@ -1,6 +1,6 @@
-import { ClientAuthService } from '@/services/client-auth.service';
-import { Component, inject } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { ClientAuthService } from '@/services/client-auth.service'
+import { Component, inject } from '@angular/core'
+import { RouterModule } from '@angular/router'
 
 @Component({
   selector: 'app-landing',
@@ -9,9 +9,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './landing.component.scss',
 })
 export class LandingComponent {
-  readonly clientAuthSvc = inject(ClientAuthService);
+  readonly clientAuthSvc = inject(ClientAuthService)
 
   gotoLogin() {
-    this.clientAuthSvc.gotoDotsAuthLogin();
+    this.clientAuthSvc.gotoDotsAuthLogin()
   }
 }

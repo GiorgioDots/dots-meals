@@ -1,6 +1,6 @@
 <p>landing works!</p>
-@if(!clientAuthSvc.loggedIn){
-<button (click)="gotoLogin()">login</button>
+@if (!clientAuthSvc.loggedIn) {
+  <button (click)="gotoLogin()">login</button>
 } @else {
-<a [routerLink]="['/app']" routerLinkActive="router-link-active">enter app</a>
+  <a [routerLink]="['/app']" routerLinkActive="router-link-active">enter app</a>
 }

@@ -15,13 +15,13 @@
  */
 export abstract class TokensHandler<TData> {
   /** Key used to store the access token in localStorage. */
-  protected tokenKey = "a_tkn";
+  protected tokenKey = 'a_tkn'
 
   /** Key used to store the refresh token in localStorage. */
-  protected refreshTokenKey = "a_rfsh";
+  protected refreshTokenKey = 'a_rfsh'
 
   /** Stores extracted token data. */
-  private tokenData?: TData;
+  private tokenData?: TData
 
   /**
    * Constructor to initialize the token keys and load stored tokens.
@@ -30,9 +30,9 @@ export abstract class TokensHandler<TData> {
    * @param refreshTokenKey - The key used to store the refresh token.
    */
   constructor(tokenKey: string, refreshTokenKey: string) {
-    this.tokenKey = tokenKey;
-    this.refreshTokenKey = refreshTokenKey;
-    this.loadTokens();
+    this.tokenKey = tokenKey
+    this.refreshTokenKey = refreshTokenKey
+    this.loadTokens()
   }
 
   /**
@@ -42,18 +42,18 @@ export abstract class TokensHandler<TData> {
    * @param refreshToken - The refresh token.
    */
   public setTokens(token: string, refreshToken: string) {
-    sessionStorage.setItem(this.tokenKey, token);
-    localStorage.setItem(this.refreshTokenKey, refreshToken);
-    this.tokenData = this.extractTokenData(token);
+    sessionStorage.setItem(this.tokenKey, token)
+    localStorage.setItem(this.refreshTokenKey, refreshToken)
+    this.tokenData = this.extractTokenData(token)
   }
 
   /**
    * Clears the stored tokens from localStorage and resets token data.
    */
   public clearTokens() {
-    sessionStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.refreshTokenKey);
-    this.tokenData = undefined;
+    sessionStorage.removeItem(this.tokenKey)
+    localStorage.removeItem(this.refreshTokenKey)
+    this.tokenData = undefined
   }
 
   /**
@@ -62,7 +62,7 @@ export abstract class TokensHandler<TData> {
    * @returns The extracted token data or `undefined` if no token is set.
    */
   public getTokenData(): TData | undefined {
-    return this.tokenData;
+    return this.tokenData
   }
 
   /**
@@ -71,7 +71,7 @@ export abstract class TokensHandler<TData> {
    * @returns The access token or `null` if not found.
    */
   public getToken() {
-    return sessionStorage.getItem(this.tokenKey);
+    return sessionStorage.getItem(this.tokenKey)
   }
 
   /**
@@ -80,17 +80,17 @@ export abstract class TokensHandler<TData> {
    * @returns The refresh token or `null` if not found.
    */
   public getRefreshToken() {
-    return localStorage.getItem(this.refreshTokenKey);
+    return localStorage.getItem(this.refreshTokenKey)
   }
 
   /**
    * Loads tokens from localStorage and extracts token data if tokens exist.
    */
   private loadTokens() {
-    const token = sessionStorage.getItem(this.tokenKey);
-    const refreshToken = localStorage.getItem(this.refreshTokenKey);
+    const token = sessionStorage.getItem(this.tokenKey)
+    const refreshToken = localStorage.getItem(this.refreshTokenKey)
     if (token && refreshToken) {
-      this.setTokens(token, refreshToken);
+      this.setTokens(token, refreshToken)
     }
   }
 
@@ -100,5 +100,5 @@ export abstract class TokensHandler<TData> {
    * @param token - The access token.
    * @returns Extracted token data.
    */
-  protected abstract extractTokenData(token: string): TData;
+  protected abstract extractTokenData(token: string): TData
 }

@@ -1,6 +1,6 @@
-import { ClientAuthService } from '@/services/client-auth.service';
-import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { ClientAuthService } from '@/services/client-auth.service'
+import { Component, inject } from '@angular/core'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-main',
@@ -9,11 +9,11 @@ import { Router } from '@angular/router';
   styleUrl: './main.component.scss',
 })
 export class MainComponent {
-  readonly clientAuthSvc = inject(ClientAuthService);
-  readonly router = inject(Router);
+  readonly clientAuthSvc = inject(ClientAuthService)
+  readonly router = inject(Router)
 
   logout() {
-    this.clientAuthSvc.logout();
-    this.router.navigate(['']);
+    this.clientAuthSvc.logout()
+    this.router.navigate([''])
   }
 }
