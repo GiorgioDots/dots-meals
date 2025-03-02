@@ -14,3 +14,7 @@ body {
   scrollbar-width: thin;
   scrollbar-color: hsl(var(--border)) transparent;
 }
+
+.logo {
+  @apply fill-primary;
+}

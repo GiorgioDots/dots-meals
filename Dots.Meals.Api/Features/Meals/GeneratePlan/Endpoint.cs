@@ -32,6 +32,7 @@ internal sealed class Endpoint : EndpointWithoutRequest<Response>
         var mealPlan = new MealPlan
         {
             UserId = user.Id,
+            Name = "Welcome plan",
             CreatedAt = DateTimeOffset.Now.ToUnixTimeMilliseconds()
         };
         dc.MealPlans.Add(mealPlan);

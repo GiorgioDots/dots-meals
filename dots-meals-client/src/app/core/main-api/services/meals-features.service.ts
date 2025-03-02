@@ -14,11 +14,39 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { mealsGeneratePlanEndpoint } from '../fn/meals-features/meals-generate-plan-endpoint';
 import { MealsGeneratePlanEndpoint$Params } from '../fn/meals-features/meals-generate-plan-endpoint';
 import { MealsGeneratePlanResponse } from '../models/meals-generate-plan-response';
+import { mealsRetrievePlansEndpoint } from '../fn/meals-features/meals-retrieve-plans-endpoint';
+import { MealsRetrievePlansEndpoint$Params } from '../fn/meals-features/meals-retrieve-plans-endpoint';
+import { MealsRetrievePlansResponse } from '../models/meals-retrieve-plans-response';
 
 @Injectable({ providedIn: 'root' })
 export class MealsFeaturesService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `mealsRetrievePlansEndpoint()` */
+  static readonly MealsRetrievePlansEndpointPath = '/meals-features/retrieve-plans';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `mealsRetrievePlansEndpoint()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsRetrievePlansEndpoint$Response(params?: MealsRetrievePlansEndpoint$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<MealsRetrievePlansResponse>>> {
+    return mealsRetrievePlansEndpoint(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `mealsRetrievePlansEndpoint$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  mealsRetrievePlansEndpoint(params?: MealsRetrievePlansEndpoint$Params, context?: HttpContext): Observable<Array<MealsRetrievePlansResponse>> {
+    return this.mealsRetrievePlansEndpoint$Response(params, context).pipe(
+      map((r: StrictHttpResponse<Array<MealsRetrievePlansResponse>>): Array<MealsRetrievePlansResponse> => r.body)
+    );
   }
 
   /** Path part for operation `mealsGeneratePlanEndpoint()` */

@@ -6,10 +6,11 @@ import { SessionService } from '@/services/session.service'
 import { Component, inject, OnInit, signal } from '@angular/core'
 import { Router, RouterModule } from '@angular/router'
 import { switchMap } from 'rxjs'
+import { MainNavigatorComponent } from "../../core/components/main/main-navigator/main-navigator.component";
 
 @Component({
   selector: 'app-main',
-  imports: [WelcomeComponent, RouterModule],
+  imports: [WelcomeComponent, RouterModule, MainNavigatorComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
@@ -35,6 +36,9 @@ export class MainComponent implements OnInit {
         next: (res) => {
           this.userFirstAccess.set(!res)
           this.loading.set(false)
+          if (res) {
+            this.router.navigate(['app', 'plans'])
+          }
         },
         error: () => {
           this.loading.set(false)
@@ -47,6 +51,7 @@ export class MainComponent implements OnInit {
       next: (res) => {
         this.userFirstAccess.set(!res)
         this.loading.set(false)
+            this.router.navigate(['app', 'plans'])
       },
       error: () => {
         this.loading.set(false)

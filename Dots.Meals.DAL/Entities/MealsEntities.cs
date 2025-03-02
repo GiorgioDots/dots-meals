@@ -15,6 +15,8 @@ public class MealPlan
 
     public Guid UserId { get; set; } // Store which user the meal plan belongs to
 
+    public string Name { get; set; }
+
     public long CreatedAt { get; set; } = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
     [JsonIgnore]

@@ -15,10 +15,20 @@ export const routes: Routes = [
     canActivate: [isAuthGuard],
     children: [
       {
-        path: '',
+        path: 'plans',
         pathMatch: 'full',
         loadComponent: () =>
           import('@/pages/main/meal-plans/meal-plans.component').then((k) => k.MealPlansComponent),
+        children: [
+          {
+            path: '',
+            pathMatch: 'full',
+            loadComponent: () =>
+              import('@/pages/main/meal-plans/meal-plans-list/meal-plans-list.component').then(
+                (k) => k.MealPlansListComponent,
+              ),
+          },
+        ],
       },
     ],
   },

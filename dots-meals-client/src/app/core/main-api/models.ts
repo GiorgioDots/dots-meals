@@ -28,6 +28,9 @@ export { type
   MealsGeneratePlanResponse
   } from './models/meals-generate-plan-response';
 export { type
+  MealsRetrievePlansResponse
+  } from './models/meals-retrieve-plans-response';
+export { type
   UserRetrieveLoggedUserResponse
   } from './models/user-retrieve-logged-user-response';
 export { type

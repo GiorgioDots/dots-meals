@@ -14,6 +14,7 @@ CREATE TABLE Users (
 -- Create MealPlan table
 CREATE TABLE "MealPlans" (
     "Id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "Name" TEXT NOT NULL,
     "UserId" TEXT NOT NULL,
     "CreatedAt" INTEGER NOT NULL
 );
