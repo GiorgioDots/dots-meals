@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dots.Meals.DAL.Enums;
 
 namespace Dots.Meals.DAL.Entities;
 public class Users
@@ -24,4 +25,15 @@ public class Users
 
     [Required]
     public decimal Height { get; set; }
+
+    [Required]
+    public Genders Gender { get; set; }
+
+    public ActivityLevels? ActivityLevel { get; set; }
+
+    public string? Allergies { get; set; }
+
+    public string? Goal { get; set; }
+
+    public DietType? DietType { get; set; }
 }

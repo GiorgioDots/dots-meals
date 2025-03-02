@@ -1,0 +1,43 @@
+<div class="flex flex-col gap-2">
+  @if (label) {
+    <label
+      [for]="id"
+      class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      [class.text-destructive]="isInvalid()"
+    >
+      {{ label }}
+    </label>
+  }
+
+  @if (!customInputs.includes(type)) {
+    <input
+      [type]="type"
+      [id]="id"
+      [formControl]="control"
+      class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+      [class.border-destructive]="isInvalid()"
+      [class.ring-destructive]="isInvalid()"
+      [placeholder]="placeholder"
+      [attr.disabled]="control.disabled ? true : null"
+    />
+  }
+  @if(type == 'select'){
+    <span rdxSelect (onValueChange)="control.setValue($event)">
+      <button rdxSelectTrigger>
+        <span rdxSelectValue [placeholder]="placeholder"></span>
+        <ng-icon name="heroChevronDown"></ng-icon>
+      </button>
+      <div rdxSelectContent>
+        @for (opt of options; track opt.value) {
+          <div [value]="opt.value.toString()" rdxSelectItem>{{ opt.label }}</div>
+        }
+      </div>
+    </span>
+  }
+
+  @if (showError && isInvalid()) {
+    <p class="text-sm text-destructive">
+      {{ getErrorMessage() }}
+    </p>
+  }
+</div>

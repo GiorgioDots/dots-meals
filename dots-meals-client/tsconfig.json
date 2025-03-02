@@ -20,11 +20,12 @@
     "paths": {
       "@/pages/*": ["./src/app/pages/*"],
       "@/envs/*": ["./src/environments/*"],
-      "@/blocks/*": ["./src/app/core/blocks/*"],
-      "@/services/*": ["./src/app/core/services/*"],
-      "@/directives/*": ["./src/app/core/directives/*"],
-      "@/main-api/*": ["./src/app/core/main-api/*"],
-      "@/components/*": ["./src/app/core/components/*"]
+      "@/*": ["./src/app/core/*"]
+      // "@/blocks/*": ["./src/app/core/blocks/*"],
+      // "@/services/*": ["./src/app/core/services/*"],
+      // "@/directives/*": ["./src/app/core/directives/*"],
+      // "@/main-api/*": ["./src/app/core/main-api/*"],
+      // "@/components/*": ["./src/app/core/components/*"]
     }
   },
   "angularCompilerOptions": {

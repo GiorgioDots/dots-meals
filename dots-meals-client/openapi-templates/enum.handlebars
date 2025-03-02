@@ -1,0 +1,6 @@
+export const {{{typeName}}} = {
+{{#enumValues}}  {{{name}}}: {{{value}}}{{^@last}},
+{{/@last}}{{/enumValues}}
+}
+
+export type {{{typeName}}} = typeof {{{typeName}}}[keyof typeof {{{typeName}}}]

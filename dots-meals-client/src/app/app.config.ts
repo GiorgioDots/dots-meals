@@ -11,6 +11,7 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http'
 import { jwtAuthInterceptor } from './core/blocks/auth/jwt-auth/jwt-auth.interceptor'
 import { ApiModule } from '@/main-api/api.module'
 import { environment } from '@/envs/environment'
+import { provideNgIconsConfig, withContentSecurityPolicy } from '@ng-icons/core'
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +22,12 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptors([jwtAuthInterceptor])),
     importProvidersFrom(ApiModule.forRoot({ rootUrl: environment.apiUrl })),
+    provideNgIconsConfig(
+      {
+        // size: '1.2rem',
+      },
+      withContentSecurityPolicy(),
+    ),
   ],
 }
 

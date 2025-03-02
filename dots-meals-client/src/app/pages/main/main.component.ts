@@ -1,5 +1,4 @@
 import { WelcomeComponent } from '@/components/main/welcome/welcome.component'
-import { DotsButtonDirective } from '@/directives/dots-button.directive'
 import { ClientAuthService } from '@/services/client-auth.service'
 import { SessionService } from '@/services/session.service'
 import { Component, inject, OnInit, signal } from '@angular/core'
@@ -7,7 +6,7 @@ import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-main',
-  imports: [DotsButtonDirective, WelcomeComponent],
+  imports: [WelcomeComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })

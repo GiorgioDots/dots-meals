@@ -1,4 +1,58 @@
-WELCOME
-<button dotsButton>THEME</button>
+<div class="flex flex-col gap-2 md:w-full md:max-w-lg md:mx-auto">
+  <div class="pt-2.5 relative">
+    <h1 class="text-xl font-semibold text-center">Welcome to Dots Meals! 👋</h1>
+    <app-button variant="ghost" size="icon" (btnClick)="themeSvc.toggleTheme()" class="absolute right-0 top-1">
+      <ng-icon [name]="themeSvc.isDarkMode() ? 'heroSun' : 'heroMoon'"></ng-icon>
+    </app-button>
+  </div>
+  <h4 class="px-4 text-center">
+    Let's create a meal plan tailored just for you. We just need a few details to get started!
+  </h4>
+  <hr>
 
-<input />
+  <form class="px-4 pb-4 flex flex-col gap-4" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <app-input
+      [control]="form.controls.name"
+      label="Name *"
+      placeholder="Your name or nickname"
+    ></app-input>
+    <app-input type="date" [control]="form.controls.birthDate" label="Birth Date *"></app-input>
+    <app-input type="number" [control]="form.controls.weight" label="Weight (kg) *"></app-input>
+    <app-input type="number" [control]="form.controls.height" label="Height (cm) *"></app-input>
+    <app-input
+      type="select"
+      [options]="gendersOpts"
+      [control]="form.controls.gender"
+      label="Gender *"
+      placeholder="Select gender"
+    >
+    </app-input>
+    <app-input
+      type="select"
+      [options]="activityLevelsOpts"
+      [control]="form.controls.activityLevel"
+      label="Activity Level"
+      placeholder="Select activity level"
+    ></app-input>
+    <app-input
+      type="select"
+      [options]="dietsOpts"
+      [control]="form.controls.dietType"
+      label="Diet Type"
+      placeholder="Select your diet"
+    ></app-input>
+    <app-input
+      [control]="form.controls.allergies"
+      label="Allergies"
+      placeholder="Insert any allergy"
+    ></app-input>
+    <app-input
+      [control]="form.controls.goal"
+      label="Describe your goal (optional)"
+      placeholder="eg: weight loss, eating better, etc"
+    ></app-input>
+    <app-button type="submit" [loading]="false" [fullWidth]="true">
+      Generate My Meal Plan! 🎉
+    </app-button>
+  </form>
+</div>
