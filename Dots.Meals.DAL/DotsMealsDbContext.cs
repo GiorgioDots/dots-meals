@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Dots.Meals.DAL;
 public class DotsMealsDbContext : DbContext
 {
-    public DbSet<Users> Users { get; set; }
+    public DbSet<User> Users { get; set; }
     public DbSet<MealPlan> MealPlans { get; set; }
     public DbSet<MealDay> MealDays { get; set; }
     public DbSet<Meal> Meals { get; set; }
@@ -20,7 +20,7 @@ public class DotsMealsDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Configure Users table
-        modelBuilder.Entity<Users>(entity =>
+        modelBuilder.Entity<User>(entity =>
         {
             entity.HasKey(u => u.Id);
 
@@ -55,10 +55,56 @@ public class DotsMealsDbContext : DbContext
 
             entity.Property(u => u.Goal)
                 .HasMaxLength(255); // Optional field with max length
-
-            modelBuilder.Entity<MealPlan>().HasMany(m => m.Days).WithOne(d => d.MealPlan).HasForeignKey(d => d.MealPlanId);
-            modelBuilder.Entity<MealDay>().HasMany(d => d.Meals).WithOne(m => m.MealDay).HasForeignKey(m => m.MealDayId);
         });
+
+        // MealPlan Configuration
+        //modelBuilder.Entity<MealPlan>().ToTable("MealPlans");
+        modelBuilder.Entity<MealPlan>()
+            .HasKey(mp => mp.Id);
+
+        modelBuilder.Entity<MealPlan>()
+            .Property(mp => mp.UserId)
+            .IsRequired()
+            .HasConversion<Guid>(); // Ensure UserId is stored as a GUID
+
+        modelBuilder.Entity<MealPlan>()
+            .Property(mp => mp.CreatedAt);
+
+        modelBuilder.Entity<MealPlan>()
+            .HasMany(mp => mp.MealDays)
+            .WithOne(md => md.MealPlan)
+            .HasForeignKey(md => md.MealPlanId)
+            .OnDelete(DeleteBehavior.Cascade); // Cascade delete MealDays when MealPlan is deleted
+
+        // MealDay Configuration
+        //modelBuilder.Entity<MealDay>().ToTable("MealDays");
+        modelBuilder.Entity<MealDay>()
+            .HasKey(md => md.Id);
+
+        modelBuilder.Entity<MealDay>()
+            .Property(md => md.Day)
+            .IsRequired();
+
+        modelBuilder.Entity<MealDay>()
+            .HasMany(md => md.Meals)
+            .WithOne(m => m.MealDay)
+            .HasForeignKey(m => m.MealDayId)
+            .OnDelete(DeleteBehavior.Cascade); // Cascade delete Meals when MealDay is deleted
+
+        // Meal Configuration
+        //modelBuilder.Entity<Meal>().ToTable("Meal");
+        modelBuilder.Entity<Meal>()
+            .HasKey(m => m.Id);
+
+        modelBuilder.Entity<Meal>()
+            .Property(m => m.MealType)
+            .IsRequired()
+            .HasMaxLength(50);
+
+        modelBuilder.Entity<Meal>()
+            .Property(m => m.Food)
+            .IsRequired()
+            .HasMaxLength(255);
     }
 
 }

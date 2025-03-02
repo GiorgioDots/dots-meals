@@ -4,13 +4,14 @@ import { UserUpdateUserDataRequest } from '@/main-api/models'
 import { DotsMealsDalEnumsActivityLevels } from '@/main-api/models/dots-meals-dal-enums-activity-levels'
 import { DotsMealsDalEnumsDietType } from '@/main-api/models/dots-meals-dal-enums-diet-type'
 import { DotsMealsDalEnumsGenders } from '@/main-api/models/dots-meals-dal-enums-genders'
-import { UserFeaturesService } from '@/main-api/services'
+import { MealsFeaturesService, UserFeaturesService } from '@/main-api/services'
 import { EnumsService, EnumsTypes } from '@/services/enums.service'
 import { ThemeService } from '@/services/theme.service'
-import { Component, inject, signal } from '@angular/core'
+import { Component, EventEmitter, inject, Output, signal } from '@angular/core'
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { heroChevronDown, heroMoon, heroSun } from '@ng-icons/heroicons/outline'
+import { switchMap } from 'rxjs'
 export enum Tes {
   MALE = 1,
   FEMALE = 2,
@@ -24,9 +25,12 @@ export enum Tes {
   providers: [provideIcons({ heroSun, heroMoon, heroChevronDown })],
 })
 export class WelcomeComponent {
+  @Output() userSubscribed = new EventEmitter()
+
   readonly themeSvc = inject(ThemeService)
   readonly enumsSvc = inject(EnumsService)
   readonly userApi = inject(UserFeaturesService)
+  readonly mealsApi = inject(MealsFeaturesService)
 
   public gendersOpts = this.enumsSvc.getEnumOptions(EnumsTypes.Genders)
   public activityLevelsOpts = this.enumsSvc.getEnumOptions(EnumsTypes.ActivityLevels)
@@ -67,17 +71,27 @@ export class WelcomeComponent {
     }
     this.loading.set(true)
     this.loadingMsg.set('Saving data')
+    this.form.disable()
     this.userApi
       .userUpdateUserDataEndpoint({
         body: data,
       })
+      .pipe(
+        switchMap((res) => {
+          this.loadingMsg.set('Generating meal plan ✌️')
+          return this.mealsApi.mealsGeneratePlanEndpoint()
+        }),
+      )
       .subscribe({
         next: () => {
-          this.loading.set(false);
+          this.loading.set(false)
+          this.form.enable()
+          this.userSubscribed.emit()
         },
         error: () => {
           this.loading.set(false)
           this.loadingMsg.set(this.defaultLoadingMsg)
+          this.form.enable()
         },
       })
   }

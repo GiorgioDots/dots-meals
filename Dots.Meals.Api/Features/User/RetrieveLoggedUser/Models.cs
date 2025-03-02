@@ -6,7 +6,7 @@ namespace User.RetrieveLoggedUser;
 
 internal sealed class Response
 {
-    public Response(Users user)
+    public Response(Dots.Meals.DAL.Entities.User user)
     {
         Name = user.Name;
         BirthDate = user.BirthDate;

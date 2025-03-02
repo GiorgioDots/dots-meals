@@ -8,14 +8,12 @@
 
   <ItemGroup>
     <None Remove="Migrations\Script0001 - Init.sql" />
-    <None Remove="Migrations\Script0002 - Meals.sql" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Migrations\Script0001 - Init.sql">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\Script0002 - Meals.sql" />
   </ItemGroup>
 
   <ItemGroup>

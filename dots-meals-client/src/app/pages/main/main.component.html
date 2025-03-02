@@ -1,7 +1,7 @@
 @if (!loading() && !userFirstAccess()) {
-  <button (click)="logout()" dotsButton class="ml-2">Logout</button>
+  <router-outlet></router-outlet>
 } @else if (!loading() && userFirstAccess()) {
-  <app-welcome></app-welcome>
+  <app-welcome (userSubscribed)="onUserSubscribed()"></app-welcome>
 } @else {
   loading
 }

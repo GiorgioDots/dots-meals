@@ -4,12 +4,12 @@ import { ClientAuthService } from '@/services/client-auth.service'
 import { EnumsService } from '@/services/enums.service'
 import { SessionService } from '@/services/session.service'
 import { Component, inject, OnInit, signal } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, RouterModule } from '@angular/router'
 import { switchMap } from 'rxjs'
 
 @Component({
   selector: 'app-main',
-  imports: [WelcomeComponent],
+  imports: [WelcomeComponent, RouterModule],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
@@ -40,6 +40,18 @@ export class MainComponent implements OnInit {
           this.loading.set(false)
         },
       })
+  }
+
+  onUserSubscribed() {
+    this.sessionSvc.initialize().subscribe({
+      next: (res) => {
+        this.userFirstAccess.set(!res)
+        this.loading.set(false)
+      },
+      error: () => {
+        this.loading.set(false)
+      },
+    })
   }
 
   logout() {

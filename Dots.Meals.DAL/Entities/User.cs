@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Dots.Meals.DAL.Enums;
 
 namespace Dots.Meals.DAL.Entities;
-public class Users
+public class User
 {
     [Key] 
     public Guid Id { get; set; }

@@ -4,9 +4,9 @@ using System.Text.Json;
 
 namespace Dots.Meals.Api.Services.OpenAI.Prompts;
 
-internal class GenerateWeeklyMealPrompt : Prompt<GenerateWeeklyMealPrompt.Result>
+public class GenerateWeeklyMealPrompt : Prompt<GenerateWeeklyMealPrompt.Result>
 {
-    public GenerateWeeklyMealPrompt(ChatClient client, Users user) : base(client)
+    public GenerateWeeklyMealPrompt(ChatClient client, DAL.Entities.User user) : base(client)
     {
         var formattedData = ConvertEnumsToDescriptions(user);
         var userDataJson = JsonSerializer.Serialize(formattedData, new JsonSerializerOptions { WriteIndented = true });
@@ -66,17 +66,17 @@ internal class GenerateWeeklyMealPrompt : Prompt<GenerateWeeklyMealPrompt.Result
         return Task.FromResult<Result?>(mealPlan);
     }
 
-    internal class Result
+    public class Result
     {
-        internal List<Day> days { get; set; }
+        public List<Day> days { get; set; }
 
-        internal class Day
+        public class Day
         {
             public string day { get; set; }
             public List<Meal> meals { get; set; }
         }
 
-        internal class Meal
+        public class Meal
         {
             public string meal { get; set; }
             public string food { get; set; }

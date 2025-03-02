@@ -13,7 +13,14 @@ export const routes: Routes = [
     path: 'app',
     loadComponent: () => import('@/pages/main/main.component').then((k) => k.MainComponent),
     canActivate: [isAuthGuard],
-    children: [],
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        loadComponent: () =>
+          import('@/pages/main/meal-plans/meal-plans.component').then((k) => k.MealPlansComponent),
+      },
+    ],
   },
   {
     path: '',

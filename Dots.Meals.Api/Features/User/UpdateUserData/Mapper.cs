@@ -5,11 +5,11 @@ using System.Xml.Linq;
 
 namespace User.UpdateUserData;
 
-internal sealed class Mapper : Mapper<Request, Response, Users>
+internal sealed class Mapper : Mapper<Request, Response, Dots.Meals.DAL.Entities.User>
 {
-    public override Users ToEntity(Request request)
+    public override Dots.Meals.DAL.Entities.User ToEntity(Request request)
     {
-        return new Users
+        return new Dots.Meals.DAL.Entities.User
         {
             Name = request.Name,
             BirthDate = request.BirthDate,
@@ -23,7 +23,7 @@ internal sealed class Mapper : Mapper<Request, Response, Users>
         };
     }
 
-    public override Users UpdateEntity(Request request, Users e)
+    public override Dots.Meals.DAL.Entities.User UpdateEntity(Request request, Dots.Meals.DAL.Entities.User e)
     {
         e.Name = request.Name;
         e.BirthDate = request.BirthDate;
