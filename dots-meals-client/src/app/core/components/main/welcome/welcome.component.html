@@ -1,14 +1,19 @@
 <div class="flex flex-col gap-2 md:w-full md:max-w-lg md:mx-auto">
   <div class="pt-2.5 relative">
     <h1 class="text-xl font-semibold text-center">Welcome to Dots Meals! 👋</h1>
-    <app-button variant="ghost" size="icon" (btnClick)="themeSvc.toggleTheme()" class="absolute right-0 top-1">
+    <app-button
+      variant="ghost"
+      size="icon"
+      (btnClick)="themeSvc.toggleTheme()"
+      class="absolute right-0 top-1"
+    >
       <ng-icon [name]="themeSvc.isDarkMode() ? 'heroSun' : 'heroMoon'"></ng-icon>
     </app-button>
   </div>
   <h4 class="px-4 text-center">
     Let's create a meal plan tailored just for you. We just need a few details to get started!
   </h4>
-  <hr>
+  <hr />
 
   <form class="px-4 pb-4 flex flex-col gap-4" [formGroup]="form" (ngSubmit)="onSubmit()">
     <app-input
@@ -16,17 +21,38 @@
       label="Name *"
       placeholder="Your name or nickname"
     ></app-input>
-    <app-input type="date" [control]="form.controls.birthDate" label="Birth Date *"></app-input>
-    <app-input type="number" [control]="form.controls.weight" label="Weight (kg) *"></app-input>
-    <app-input type="number" [control]="form.controls.height" label="Height (cm) *"></app-input>
-    <app-input
-      type="select"
-      [options]="gendersOpts"
-      [control]="form.controls.gender"
-      label="Gender *"
-      placeholder="Select gender"
-    >
-    </app-input>
+    <div class="flex gap-2">
+      <app-input
+        type="date"
+        [control]="form.controls.birthDate"
+        label="Birth Date *"
+        class="w-full"
+      ></app-input>
+      <app-input
+        type="select"
+        [options]="gendersOpts"
+        [control]="form.controls.gender"
+        label="Gender *"
+        placeholder="Select gender"
+        class="w-full"
+      >
+      </app-input>
+    </div>
+    <div class="flex gap-2">
+      <app-input
+        type="number"
+        [control]="form.controls.weight"
+        label="Weight (kg) *"
+        class="w-full"
+      ></app-input>
+      <app-input
+        type="number"
+        [control]="form.controls.height"
+        label="Height (cm) *"
+        class="w-full"
+      ></app-input>
+    </div>
+
     <app-input
       type="select"
       [options]="activityLevelsOpts"
@@ -51,8 +77,8 @@
       label="Describe your goal (optional)"
       placeholder="eg: weight loss, eating better, etc"
     ></app-input>
-    <app-button type="submit" [loading]="false" [fullWidth]="true">
-      Generate My Meal Plan! 🎉
+    <app-button type="submit" [loading]="false" [fullWidth]="true" [loading]="loading()">
+      {{loadingMsg()}}
     </app-button>
   </form>
 </div>

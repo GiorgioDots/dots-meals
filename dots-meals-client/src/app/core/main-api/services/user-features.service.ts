@@ -14,11 +14,39 @@ import { StrictHttpResponse } from '../strict-http-response';
 import { userRetrieveLoggedUserEndpoint } from '../fn/user-features/user-retrieve-logged-user-endpoint';
 import { UserRetrieveLoggedUserEndpoint$Params } from '../fn/user-features/user-retrieve-logged-user-endpoint';
 import { UserRetrieveLoggedUserResponse } from '../models/user-retrieve-logged-user-response';
+import { userUpdateUserDataEndpoint } from '../fn/user-features/user-update-user-data-endpoint';
+import { UserUpdateUserDataEndpoint$Params } from '../fn/user-features/user-update-user-data-endpoint';
+import { UserUpdateUserDataResponse } from '../models/user-update-user-data-response';
 
 @Injectable({ providedIn: 'root' })
 export class UserFeaturesService extends BaseService {
   constructor(config: ApiConfiguration, http: HttpClient) {
     super(config, http);
+  }
+
+  /** Path part for operation `userUpdateUserDataEndpoint()` */
+  static readonly UserUpdateUserDataEndpointPath = '/user-features/update-user-data';
+
+  /**
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `userUpdateUserDataEndpoint()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  userUpdateUserDataEndpoint$Response(params: UserUpdateUserDataEndpoint$Params, context?: HttpContext): Observable<StrictHttpResponse<UserUpdateUserDataResponse>> {
+    return userUpdateUserDataEndpoint(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `userUpdateUserDataEndpoint$Response()` instead.
+   *
+   * This method sends `application/json` and handles request body of type `application/json`.
+   */
+  userUpdateUserDataEndpoint(params: UserUpdateUserDataEndpoint$Params, context?: HttpContext): Observable<UserUpdateUserDataResponse> {
+    return this.userUpdateUserDataEndpoint$Response(params, context).pipe(
+      map((r: StrictHttpResponse<UserUpdateUserDataResponse>): UserUpdateUserDataResponse => r.body)
+    );
   }
 
   /** Path part for operation `userRetrieveLoggedUserEndpoint()` */

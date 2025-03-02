@@ -16,8 +16,20 @@ export { type
   DotsMealsDalEnumsGenders
   } from './models/dots-meals-dal-enums-genders';
 export { type
+  EnumsRetrieveTranslationsEnumOption
+  } from './models/enums-retrieve-translations-enum-option';
+export { type
+  EnumsRetrieveTranslationsEnumOptions
+  } from './models/enums-retrieve-translations-enum-options';
+export { type
   FastEndpointsErrorResponse
   } from './models/fast-endpoints-error-response';
 export { type
   UserRetrieveLoggedUserResponse
   } from './models/user-retrieve-logged-user-response';
+export { type
+  UserUpdateUserDataRequest
+  } from './models/user-update-user-data-request';
+export { type
+  UserUpdateUserDataResponse
+  } from './models/user-update-user-data-response';

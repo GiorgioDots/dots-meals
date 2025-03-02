@@ -4,7 +4,7 @@ import { FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { NgIcon, provideIcons } from '@ng-icons/core'
 import { heroChevronDown } from '@ng-icons/heroicons/outline'
 import { RdxSelectModule } from '@radix-ng/primitives/select'
-import { EnumOption } from '@/utils/enum-utils'
+import { EnumsRetrieveTranslationsEnumOption } from '@/main-api/models'
 
 @Component({
   selector: 'app-input',
@@ -20,7 +20,7 @@ export class InputComponent implements OnInit, OnDestroy {
   @Input() placeholder = ''
   @Input() id = ''
   @Input() showError = true
-  @Input() options: EnumOption[] = []
+  @Input() options: EnumsRetrieveTranslationsEnumOption[] = []
 
   @Input({ required: true }) control!: FormControl
 

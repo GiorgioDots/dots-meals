@@ -11,6 +11,9 @@ namespace Dots.Meals.DAL;
 public class DotsMealsDbContext : DbContext
 {
     public DbSet<Users> Users { get; set; }
+    public DbSet<MealPlan> MealPlans { get; set; }
+    public DbSet<MealDay> MealDays { get; set; }
+    public DbSet<Meal> Meals { get; set; }
 
     public DotsMealsDbContext(DbContextOptions<DotsMealsDbContext> options) : base(options) { }
 
@@ -52,6 +55,9 @@ public class DotsMealsDbContext : DbContext
 
             entity.Property(u => u.Goal)
                 .HasMaxLength(255); // Optional field with max length
+
+            modelBuilder.Entity<MealPlan>().HasMany(m => m.Days).WithOne(d => d.MealPlan).HasForeignKey(d => d.MealPlanId);
+            modelBuilder.Entity<MealDay>().HasMany(d => d.Meals).WithOne(m => m.MealDay).HasForeignKey(m => m.MealDayId);
         });
     }
 

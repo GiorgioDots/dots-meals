@@ -11,6 +11,7 @@ services:
     secrets:
       - db_url
       - jwt_secret
+      - openai_key
     volumes:
       - ./sqlite-data:/data  # Mount local sqlite-data folder to /data inside the container
     environment:
@@ -20,9 +21,13 @@ services:
       - JWT_ISSUER=http://auth.giorgio-dots.com
       - JWT_AUDIENCE=dots-meals-4f8a2c7b-9d3f-4a6e-bc1a-72e8a5d01234
       - ALLOWED_ORIGINS=http://localhost:4200
+      - OPENAI_KEY_FILE=/run/secrets/openai_key
+      - OPENAI_MODEL=gpt-3.5-turbo
 
 secrets:
   db_url:
     file: ./secrets/db_url.secret
   jwt_secret:
     file: ./secrets/jwt_secret.secret
+  openai_key:
+    file: "./secrets/openai_key.secret"

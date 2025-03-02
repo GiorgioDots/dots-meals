@@ -3,7 +3,7 @@
 }
 
 [rdxselectcontent] {
-  @apply bg-background border-1 shadow-sm border-border p-1 rounded-default min-w-48 mt-1;
+  @apply bg-background border-1 shadow-sm border-border p-1 rounded-default min-w-48 my-1 max-h-[50vh] overflow-y-auto;
 }
 
 [rdxselectitem] {

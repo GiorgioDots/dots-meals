@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace User.RetrieveLoggedUser;
 
-internal sealed class Endpoint(DotsMealsDbContext dc) : EndpointWithoutRequest<Response?>
+internal sealed class Endpoint : EndpointWithoutRequest<Response?>
 {
-    private readonly DotsMealsDbContext dc = dc;
+    public DotsMealsDbContext dc { get; set; }
 
     public override void Configure()
     {

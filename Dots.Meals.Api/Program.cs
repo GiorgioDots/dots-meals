@@ -1,3 +1,4 @@
+using Dots.Meals.Api.Services.OpenAI;
 using Dots.Meals.DAL;
 using FastEndpoints.Security;
 using FastEndpoints.Swagger;
@@ -17,6 +18,7 @@ namespace Dots.Meals.Api
             dbInitializer.Initialize();
 
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddSingleton(settings);
 
             builder.Services.AddDbContext<DotsMealsDbContext>(opt => opt.UseSqlite(settings.DbUrl));
 
@@ -44,6 +46,8 @@ namespace Dots.Meals.Api
                 o.AddPolicy("cors", p =>
                     p.WithOrigins(Envs.AllowedOrigins.Split(',')).AllowAnyHeader().AllowAnyMethod())
             );
+
+            builder.Services.AddSingleton<OpenAiService>();
 
 
             var app = builder.Build();

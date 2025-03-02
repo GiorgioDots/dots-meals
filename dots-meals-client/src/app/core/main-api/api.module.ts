@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { ApiConfiguration, ApiConfigurationParams } from './api-configuration';
 
 import { UserFeaturesService } from './services/user-features.service';
+import { EnumsFeaturesService } from './services/enums-features.service';
 import { RouteService } from './services/route.service';
 
 /**
@@ -18,6 +19,7 @@ import { RouteService } from './services/route.service';
   declarations: [],
   providers: [
     UserFeaturesService,
+    EnumsFeaturesService,
     RouteService,
     ApiConfiguration
   ],

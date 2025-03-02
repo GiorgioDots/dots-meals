@@ -24,12 +24,12 @@
   @if(type == 'select'){
     <span rdxSelect (onValueChange)="control.setValue($event)">
       <button rdxSelectTrigger>
-        <span rdxSelectValue [placeholder]="placeholder"></span>
+        <span rdxSelectValue [placeholder]="placeholder" [ngClass]="{'text-foreground': control.value}"></span>
         <ng-icon name="heroChevronDown"></ng-icon>
       </button>
       <div rdxSelectContent>
-        @for (opt of options; track opt.value) {
-          <div [value]="opt.value.toString()" rdxSelectItem>{{ opt.label }}</div>
+        @for (opt of options; track opt.Value) {
+          <div [value]="opt.Value?.toString() ?? ''" rdxSelectItem>{{ opt.Description }}</div>
         }
       </div>
     </span>
