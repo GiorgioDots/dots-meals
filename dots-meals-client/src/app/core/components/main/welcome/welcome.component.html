@@ -1,14 +1,10 @@
 <div class="flex flex-col gap-2 md:w-full md:max-w-lg md:mx-auto">
   <div class="pt-2.5 relative">
     <h1 class="text-xl font-semibold text-center">Welcome to Dots Meals! 👋</h1>
-    <app-button
-      variant="ghost"
-      size="icon"
-      (btnClick)="themeSvc.toggleTheme()"
-      class="absolute right-0 top-1"
-    >
+    <app-button (btnClick)="themeSvc.toggleTheme()" class="absolute right-0 top-1">
       <ng-icon [name]="themeSvc.isDarkMode() ? 'heroSun' : 'heroMoon'"></ng-icon>
     </app-button>
+    <app-button>AS</app-button>
   </div>
   <h4 class="px-4 text-center">
     Let's create a meal plan tailored just for you. We just need a few details to get started!
@@ -16,11 +12,15 @@
   <hr />
 
   <form class="px-4 pb-4 flex flex-col gap-4" [formGroup]="form" (ngSubmit)="onSubmit()">
-    <app-input
-      [control]="form.controls.name"
-      label="Name *"
-      placeholder="Your name or nickname"
-    ></app-input>
+    <label class="floating-label w-full">
+      <span>Name *</span>
+      <input
+        type="text"
+        placeholder="Your name or nickname"
+        class="input input-md w-full"
+        [formControl]="form.controls.name"
+      />
+    </label>
     <div class="flex gap-2">
       <app-input
         type="date"
@@ -78,7 +78,7 @@
       placeholder="eg: weight loss, eating better, etc"
     ></app-input>
     <app-button type="submit" [loading]="false" [fullWidth]="true" [loading]="loading()">
-      {{loadingMsg()}}
+      {{ loadingMsg() }}
     </app-button>
   </form>
 </div>

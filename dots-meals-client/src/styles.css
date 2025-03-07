@@ -1,2 +1,19 @@
 @import 'tailwindcss';
-@import './styles/main.css';
+@plugin "daisyui" {
+  themes:
+    caramellatte --default,
+    abyss --prefersdark;
+  root: ':root';
+  include:;
+  exclude:;
+  prefix:;
+  logs: true;
+}
+
+body {
+  @apply min-h-svh antialiased transition-colors;
+}
+
+.logo {
+  @apply fill-secondary;
+}

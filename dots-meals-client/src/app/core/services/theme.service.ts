@@ -16,7 +16,7 @@ export class ThemeService {
     }
     theme = theme == 'dark' ? 'light' : 'dark'
     localStorage.setItem('app_theme', theme)
-    document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.setAttribute('data-theme', theme == 'dark' ? 'abyss' : 'caramellatte')
     this.isDarkMode.set(theme == 'dark')
   }
 }

@@ -20,6 +20,7 @@ export class ButtonComponent {
   @Input() iconLeft = false
   @Input() iconRight = false
   @Input() fullWidth = false
+  @Input() btnClass = 'btn'
 
   @Output() btnClick = new EventEmitter<MouseEvent>()
 

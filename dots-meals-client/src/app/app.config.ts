@@ -34,7 +34,7 @@ export const appConfig: ApplicationConfig = {
 const initApp = () => {
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (event) => {
     const theme = event.matches ? 'dark' : 'light'
-    document.documentElement.setAttribute('data-theme', theme)
+    document.documentElement.setAttribute('data-theme', theme == 'dark' ? 'abyss' : 'caramellatte')
   })
   let theme = localStorage.getItem('app_theme')
   if (theme == null) {
@@ -43,5 +43,5 @@ const initApp = () => {
         ? 'dark'
         : 'light'
   }
-  document.documentElement.setAttribute('data-theme', theme)
+  document.documentElement.setAttribute('data-theme', theme == 'dark' ? 'abyss' : 'caramellatte')
 }

@@ -1,7 +1,7 @@
 <button
   [type]="type"
   [disabled]="disabled || loading"
-  [class]="getButtonClasses()"
+  [class]="btnClass"
   (click)="onClick($event)"
 >
   <!-- Loading Spinner -->
