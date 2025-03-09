@@ -1,8 +1,0 @@
-@if (!loading() && !userFirstAccess()) {
-  <app-main-navigator (logout)="logout()"></app-main-navigator>
-  <router-outlet></router-outlet>
-} @else if (!loading() && userFirstAccess()) {
-  <app-welcome (userSubscribed)="onUserSubscribed()"></app-welcome>
-} @else {
-  loading
-}
